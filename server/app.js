@@ -1,10 +1,11 @@
 const express = require('express');
 const debug = require('debug')('app');
 
+const licenseRoute = require('./routes/license');
 
 const app = express();
 
-app.get('/', (req, res) => res.send('hello world'));
+app.use('/', licenseRoute);
 
 const port = process.env.PORT || 3000;
 
