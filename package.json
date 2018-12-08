@@ -4,9 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server/app.js",
+    "start": "DEBUG=app nodemon server/app.js",
     "test": "jest",
-    "lint": "eslint server"
+    "lint": "eslint server",
+    "lint-fix": "eslint server --fix",
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed:all": "sequelize db:seed:all"
   },
   "author": "Vitaliy Krasylovets",
   "license": "ISC",
@@ -14,7 +18,11 @@
     "debug": "^4.1.0",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "pg": "^7.7.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.41.2",
+    "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {
     "eslint": "^5.9.0",

@@ -1,16 +1,14 @@
 const express = require('express');
+const { License } = require('../db/models');
 
 const router = express.Router();
 
-const licenses = [
-  {
-    name: 'Apache license 2.0',
-    slug: 'apache-2-0',
-    description: 'Your Typical badboy license',
-  },
-];
-
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const licenses = await License.findAll({
+    attributes: [
+      'name', 'slug', 'description',
+    ],
+  });
   res.json(licenses);
 });
 
