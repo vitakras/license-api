@@ -1,12 +1,12 @@
 const express = require('express');
 const debug = require('debug')('app');
 
-const licenseRoute = require('./routes/license');
+const { LicenseRoute } = require('./routes');
 const db = require('./db/models');
 
 const app = express();
 
-app.use('/', licenseRoute);
+app.use('/', LicenseRoute);
 
 const port = process.env.PORT || 3000;
 

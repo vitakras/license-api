@@ -1,18 +1,16 @@
-const express = require('express');
-const { License } = require('../db/models');
-const LicenseQuery = require('../query/license');
+const { Router } = require('express');
 
-const query = new LicenseQuery(License);
+module.exports = (LicenseQuery) => {
+  const router = Router();
 
-const router = express.Router();
+  router.get('/', async (req, res) => {
+    try {
+      const licenses = await LicenseQuery.getAll();
+      res.json(licenses);
+    } catch (e) {
+      res.json({ error: e });
+    }
+  });
 
-router.get('/', async (req, res) => {
-  try {
-    const licenses = await query.getAll();
-    res.json(licenses);
-  } catch (e) {
-    res.json({ error: e });
-  }
-});
-
-module.exports = router;
+  return router;
+};

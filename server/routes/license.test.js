@@ -1,24 +1,42 @@
 const express = require('express');
 const request = require('supertest');
 
-const licenseRoute = require('./license');
+const LicenseRoute = require('./license');
 
-const InitLicenseRoute = () => {
-  const app = express();
-  app.use('/license', licenseRoute);
-  return app;
-};
+describe('LicenseRoute', () => {
+  let app;
+  let licenseRoute;
+  let licenseQueryMock;
 
-describe('GET all routes', () => {
-  it('returns a list of licenses', async () => {
-    const app = InitLicenseRoute();
+  beforeEach(() => {
+    licenseQueryMock = {};
+    licenseRoute = LicenseRoute(licenseQueryMock);
 
-    const res = await request(app).get('/license');
-    expect(res.body).toEqual([
+    app = express();
+    app.use('/license', licenseRoute);
+  });
+
+  describe('GET all routes', () => {
+    let res;
+    const licenses = [
       {
         name: 'Apache license 2.0',
         slug: 'apache-2-0',
         description: 'Your Typical badboy license',
-      }]);
+      },
+    ];
+
+    beforeEach(async () => {
+      licenseQueryMock.getAll = jest.fn().mockImplementation(async () => licenses);
+      res = await request(app).get('/license');
+    });
+
+    it('calls the LicenseQuery.getAll', () => {
+      expect(licenseQueryMock.getAll).toHaveBeenCalled();
+    });
+
+    it('returns a list of licenses', async () => {
+      expect(res.body).toEqual(licenses);
+    });
   });
 });
