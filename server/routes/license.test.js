@@ -39,4 +39,26 @@ describe('LicenseRoute', () => {
       expect(res.body).toEqual(licenses);
     });
   });
+
+  describe('GET Single License', () => {
+    let res;
+    const license = {
+      name: 'Apache license 2.0',
+      slug: 'apache-2-0',
+      description: 'Your Typical badboy license',
+    };
+
+    beforeEach(async () => {
+      licenseQueryMock.getBySlug = jest.fn().mockImplementation(async () => license);
+      res = await request(app).get('/license/apache-2-0');
+    });
+
+    it('calls the LicenseQuery getBySlug', () => {
+      expect(licenseQueryMock.getBySlug).toHaveBeenCalledWith('apache-2-0');
+    });
+
+    it('returns a license', async () => {
+      expect(res.body).toEqual(license);
+    });
+  });
 });

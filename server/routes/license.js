@@ -12,5 +12,15 @@ module.exports = (LicenseQuery) => {
     }
   });
 
+  router.get('/:slug', async (req, res) => {
+    const { slug } = req.params;
+    try {
+      const license = await LicenseQuery.getBySlug(slug);
+      res.json(license);
+    } catch (e) {
+      res.json({ error: e });
+    }
+  });
+
   return router;
 };
