@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "DEBUG=app nodemon server/app.js",
+    "console": "node bin/console.js",
     "test": "jest",
     "lint": "eslint server",
     "lint-fix": "eslint server --fix",
