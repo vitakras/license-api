@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-module.exports = (LicenseQuery) => {
+module.exports = (LicenseQuery, StorageService) => {
   const router = Router();
 
   router.get('/', async (req, res) => {
@@ -20,6 +20,10 @@ module.exports = (LicenseQuery) => {
     } catch (e) {
       res.json({ error: e });
     }
+  });
+
+  router.get('/:slug/download', async (req, res) => {
+    StorageService.download('fake_license.txt', res);
   });
 
   return router;
